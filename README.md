@@ -6,6 +6,7 @@ This is a self-made game of tic-tac-toe where a person can play the game KitKat 
 
 ## Project Details
 The project consists of 3 parts:
+
     1. The backend which consists of RL agent
     2. The UI where the player can play with KitKat
     3. The website, which puts up the application for everyone to play
