@@ -93,17 +93,18 @@ class Environment:
         """
         Member function to draw the board to play
         """
+        print("-------------")
         for i in range(LENGTH):
+            print("|", end='')
             for j in range(LENGTH):
                 if self.board[i, j] == self.X:
-                    print('X')
+                    print(' X |', end='')
                 elif self.board[i, j] == self.O:
-                    print('O')
+                    print(' O |', end='')
                 else:
-                    print('_')
-                print(" ")
-            print("\n")
-        print("--------")
+                    print('  |', end='')
+            print("")
+        print("-------------")
 
 
 class Agent:
@@ -164,7 +165,7 @@ class Agent:
             next_move = possible_moves[id]
         else:
             # exploit by selecting the best action
-            pos2value = {}
+            pos2value = {} # To store all the position to value dict for verbose
             next_move = None
             best_value = -1
             for i in range(LENGTH):
@@ -173,23 +174,95 @@ class Agent:
                         env.board[i.j] = self.symbol
                         state = env.get_state()
                         env.board[i, j] = 0  # changing it back
-                        pos2value[(i, j)] =
+                        pos2value[(i, j)] = self.V[state]
                         if self.V[state] > best_value:
                             best_value = self.V[state]
                             best_state = state
                             next_move = (i, j)
 
-            if
+            if self.verbose:
+                print("Taking a greedy action")
+
+                #printing value of the position wherever empty
+                print("-------------")
+                for i in range(LENGTH):
+                    print("|", end='')
+                    for j in range(LENGTH):
+                        if self.board[i, j] == self.X:
+                            print(' X |', end='')
+                        elif self.board[i, j] == self.O:
+                            print(' O |', end='')
+                        else:
+                            num = round(pos2value[(i,j)],2)
+                            print('{.%d|'%(num*1e2), end='')
+                    print("")
+                print("-------------")
+
 
     def update_state_history(self, state):
         """
         Updating state history for a given episode
-        :param state:
-        :return:
+        :param state: state value
         """
+        self.state_history.append(state)
 
     def update(self, env):
         """
         Queries the environment for the latest reward. Learning epicentre
-        :return:
         """
+        reward = env.reward(self.symbol)
+        target = reward
+        for prev in reversed(self.state_history):
+            value = self.V[prev] + self.alpha*(target - self.V[prev])
+            self.V[prev] = value # This value estimate converges to it's 'actual value' in reference to win or loss in the episode
+            target = value
+        self.reset_history()
+
+
+class Hooman:
+    def __init__(self):
+        pass
+
+    def set_symbol(self, symbol):
+        self.symbol = symbol
+
+    def take_action(self):
+        while True:
+            move = raw_input("Enter the position as i,j you want to place your move (i,j ∈ {0,1,2): ")
+            # break if we make a valid move
+            i, j = move.split(',')
+            i = int(strip(i))
+            j = int(strip(j))
+            if env.is_empty(i,j):
+                env.board[i,j] = self.symbol
+                break
+            else:
+                print("Invalid move! Try again...")
+
+    def update_state_history(self, state):
+        pass
+
+    def update(self, env):
+        pass
+
+
+def play_game(P1, P2, env, draw=False):
+    # iterates until the game is over
+    current_player = None
+    while not env.game_over:
+        # alternate chances in between players P1 starts first
+        if current_player == P1:
+            current_player = P2
+        else
+            current_player = P1
+
+        # draw before the hooman makes a move
+        if draw:
+            if draw == 1 and current_player == P1:
+                env.draw_board()
+            if draw == 2 and current_player == P2:
+                env.draw_board()
+
+
+
+
