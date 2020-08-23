@@ -263,6 +263,28 @@ def play_game(P1, P2, env, draw=False):
             if draw == 2 and current_player == P2:
                 env.draw_board()
 
+        # The current player makes a move
+        current_player.take_action(env)
+
+        # updating state histories
+        state = env.get_state()
+        P1.update_state_history(state)
+        P2.update_state_history(state)
+
+
+    # Draws the board at the end of the game
+    if draw:
+        env.draw_board
+
+
+    # doing value funtion update
+    P1.update(env)
+    P2.update(env)
+
+if __name__=='__main__':
+    # training agent
+    
+
 
 
 
