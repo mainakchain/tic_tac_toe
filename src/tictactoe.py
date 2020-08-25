@@ -3,6 +3,7 @@ from tqdm import tqdm
 import time
 import random
 import sys
+import pyfiglet
 
 LENGTH = 3
 
@@ -292,12 +293,12 @@ def play_game(p1, p2, env, draw=0):
         env.draw_board()
         if draw == 2:
             if env.winner == env.X:
-                print("KitKat won! Better luck next time :P")
+                print("I won! Better luck next time Noob XD")
             else:
                 print("Congrats! You won!!")
         else:
             if env.winner == env.O:
-                print("KitKat won! Better luck next time :P")
+                print("I won! Better luck next time Noob XD")
             else:
                 print("Congrats! You won!!")
 
@@ -381,11 +382,23 @@ if __name__ == '__main__':
     p1.set_symbol(env.X)
     p2.set_symbol(env.O)
 
+    pyfiglet.print_figlet("Tic-Tac-Toe RL Game", font="morse", colors="LIGHT_RED")
+    pyfiglet.print_figlet("Tic", font="isometric4", colors="LIGHT_RED")
+    pyfiglet.print_figlet("  Tac", font="isometric4", colors="LIGHT_RED")
+    pyfiglet.print_figlet("    Toe", font="isometric4", colors="LIGHT_RED")
+    pyfiglet.print_figlet("Tic-Tac-Toe RL Game", font="morse", colors="LIGHT_RED")
+    pyfiglet.print_figlet("Hi!! I am Agent RL!", font="small", colors="LIGHT_YELLOW")
+    pyfiglet.print_figlet("You can call me KitKat ;D", font="term", colors="LIGHT_GRAY")
+    pyfiglet.print_figlet("Lemme learn how to play TicTacToe. I'll right there with you.", font="term",
+                          colors="LIGHT_GRAY")
+
     # TRAINING
-    print("Training KitKat.....")
-    T = 1000 # Play T games to train
+    T = 20000 # Play T games to train
     for t in tqdm(range(T)):
         play_game(p1, p2, Environment()) # Creating new environment for every episode
+
+    pyfiglet.print_figlet("I just learned how to play the game like a boss. Lets play!! :->.", font="term",
+                          colors="LIGHT_GRAY")
 
     hooman = Hooman()
 
@@ -413,7 +426,7 @@ if __name__ == '__main__':
             if ans and ans.lower() == 'n':
                 break
     else:
-        print("KitKat won the toss. Dare you to win ( •̀ᴗ•́ )و ̑̑.")
+        print("I won the toss B). Dare you to win ( •̀ᴗ•́ )و ̑̑.")
         hooman.set_symbol(env.O)
         while True:
             p1.set_verbose(True)
